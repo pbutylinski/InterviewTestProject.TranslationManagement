@@ -4,7 +4,7 @@ namespace TranslationManagement.Domain.Validators
 {
     public interface IJobStatusValidator
     {
-        /// <exception cref="ValidationException"
+        /// <exception cref="ValidationException"></exception>
         void ValidateAndThrow(string oldStatus, string newStatus);
     }
 

@@ -11,10 +11,13 @@ namespace TranslationManagement.Domain
         {
             services.AddScoped<IPriceCalculationService, PriceCalculationService>();
             services.AddScoped<IUnreliableServiceWrapper, UnreliableServiceWrapper>();
-            services.AddScoped<IJobStatusValidator, JobStatusValidator>();
             services.AddScoped<ITranslationJobService, TranslationJobService>();
-            services.AddScoped<ITranslatorStatusValidator, TranslatorStatusValidator>();
             services.AddScoped<ITranslatorService, TranslatorService>();
+
+            // Validators
+            services.AddScoped<IJobStatusValidator, JobStatusValidator>();
+            services.AddScoped<ITranslatorStatusValidator, TranslatorStatusValidator>();
+            services.AddScoped<ICertifiedTranslatorValidator, CertifiedTranslatorValidator>();
 
             // External
             services.AddScoped<INotificationService, UnreliableNotificationService>();
