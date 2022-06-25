@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TranslationManagement.Common.Constants;
 using TranslationManagement.DataAccess;
+using TranslationJobDb = TranslationManagement.DataAccess.Models.TranslationJob;
 
 namespace TranslationManagement.Domain.Services
 {
@@ -11,17 +12,19 @@ namespace TranslationManagement.Domain.Services
         Task<bool> UpdateStatus(int jobId, string newStatus);
 
         Task<TranslationJob> Get(int jobId);
+
+        List<TranslationJob> GetAll();
     }
 
     public class TranslationJobService : ITranslationJobService
     {
-        private readonly IRepository<TranslationJob> repository;
+        private readonly IRepository<TranslationJobDb> repository;
         private readonly IPriceCalculationService priceCalculation;
         private readonly IUnreliableServiceWrapper serviceWrapper;
         private readonly IMapper mapper;
 
         public TranslationJobService(
-            IRepository<TranslationJob> repository,
+            IRepository<TranslationJobDb> repository,
             IPriceCalculationService priceCalculation,
             IUnreliableServiceWrapper serviceWrapper,
             IMapper mapper)
@@ -38,7 +41,7 @@ namespace TranslationManagement.Domain.Services
 
             this.priceCalculation.UpdatePrice(job);
 
-            var dbObject = this.mapper.Map<TranslationJob>(job);
+            var dbObject = this.mapper.Map<TranslationJobDb>(job);
             var id = await this.repository.Create(dbObject);
 
             if (id > 0)
@@ -65,6 +68,14 @@ namespace TranslationManagement.Domain.Services
             await this.repository.Update(currentJob);
 
             return true;
+        }
+
+        public List<TranslationJob> GetAll()
+        {
+            return this.repository
+                .GetAll()
+                .Select(this.mapper.Map<TranslationJob>)
+                .ToList();
         }
     }
 }

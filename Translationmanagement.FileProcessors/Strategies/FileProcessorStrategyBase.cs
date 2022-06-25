@@ -9,7 +9,7 @@
                 return false;
             }
 
-            return string.Compare(Path.GetExtension(path), ".txt",
+            return string.Compare(Path.GetExtension(path), extension,
                 StringComparison.OrdinalIgnoreCase) == 0;
         }
     }

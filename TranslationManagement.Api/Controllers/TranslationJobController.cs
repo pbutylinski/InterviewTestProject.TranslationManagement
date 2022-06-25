@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TranslationManagement.Api.Commands;
 using TranslationManagement.Api.Queries;
 using TranslationManagement.Domain.Validators;
+using TranslationManagement.FileProcessors.Exceptions;
 
 namespace TranslationManagement.Api.Controllers
 {
@@ -34,7 +35,7 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost("/{customer}/upload")]
-        public async Task<ActionResult<int>> CreateJobWithFile([FromBody] IFormFile file, [FromRoute] string customer)
+        public async Task<ActionResult<int>> CreateJobWithFile(IFormFile file, [FromRoute] string customer)
         {
             var command = new CreateJobFromFileCommand
             {
@@ -43,8 +44,23 @@ namespace TranslationManagement.Api.Controllers
                 FileName = file.FileName
             };
 
-            var result = await this.mediator.Send(command);
-            return result > 0 ? Ok(result) : BadRequest();
+            try
+            {
+                var result = await this.mediator.Send(command); 
+                return result > 0 ? Ok(result) : BadRequest();
+            }
+            catch (FileProcessingException exc)
+            {
+                return BadRequest(exc.Message);
+            }
+            catch (UnsupportedFileException exc)
+            {
+                return BadRequest(exc.Message);
+            }   
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpPatch("{jobId}")]

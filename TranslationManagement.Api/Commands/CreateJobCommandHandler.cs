@@ -15,8 +15,8 @@ namespace TranslationManagement.Api.Commands
             IMapper mapper,
             ITranslationJobService translationJobService)
         {
-            this.mapper = mapper;
-            this.translationJobService = translationJobService;
+            this.mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
+            this.translationJobService = translationJobService ?? throw new System.ArgumentNullException(nameof(translationJobService));
         }
 
         public async Task<int> Handle(CreateJobCommand request, CancellationToken cancellationToken)

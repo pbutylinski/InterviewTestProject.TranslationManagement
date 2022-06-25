@@ -1,32 +1,29 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TranslationManagement.DataAccess;
-using TranslationManagement.DataAccess.Models;
-using System;
-using AutoMapper;
-using System.Linq;
+using TranslationManagement.Domain.Services;
 
 namespace TranslationManagement.Api.Queries
 {
     public class GetJobsQueryHandler : IRequestHandler<GetJobsQuery, GetJobsQueryResult[]>
     {
-        private readonly IRepository<TranslationJob> repository;
+        private readonly ITranslationJobService translationJobService;
         private readonly IMapper mapper;
 
         public GetJobsQueryHandler(
-            IRepository<TranslationJob> repository,
+            ITranslationJobService translationJobService,
             IMapper mapper)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.translationJobService = translationJobService ?? throw new ArgumentNullException(nameof(translationJobService));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task<GetJobsQueryResult[]> Handle(GetJobsQuery request,
-            CancellationToken cancellationToken)
+        public Task<GetJobsQueryResult[]> Handle(GetJobsQuery request, CancellationToken cancellationToken)
         {
-            var results = this.repository
-                .GetAll()
+            var results = this.translationJobService.GetAll()
                 .Select(this.mapper.Map<GetJobsQueryResult>)
                 .ToArray();
 

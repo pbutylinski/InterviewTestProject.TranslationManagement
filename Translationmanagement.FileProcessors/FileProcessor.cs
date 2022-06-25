@@ -10,6 +10,9 @@ namespace TranslationManagement.FileProcessors
 
     public interface IFileProcessor
     {
+        /// <exception cref="FileProcessingException"></exception>
+        /// <exception cref="UnsupportedFileException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         FileProcessorResult Process(string filename, Stream stream);
     }
 
