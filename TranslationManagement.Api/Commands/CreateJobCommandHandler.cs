@@ -31,7 +31,7 @@ namespace TranslationManagement.Api.Commands
         public async Task<int> Handle(CreateJobCommand request, CancellationToken cancellationToken)
         {
             var domainObject = this.mapper.Map<Domain.TranslationJob>(request);
-            domainObject.Status = JobStatuses.New;
+            domainObject.Status = JobStatus.New;
 
             this.priceCalculation.UpdatePrice(domainObject);
 

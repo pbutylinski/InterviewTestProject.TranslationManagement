@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace TranslationManagement.Api.Commands

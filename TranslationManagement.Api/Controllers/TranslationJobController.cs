@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TranslationManagement.Api.Commands;
 using TranslationManagement.Api.Queries;
+using TranslationManagement.Domain.Validators;
 
 namespace TranslationManagement.Api.Controllers
 {
@@ -29,12 +30,8 @@ namespace TranslationManagement.Api.Controllers
             [FromRoute] string customer, [FromBody] CreateJobCommand command)
         {
             command.CustomerName = customer;
-
             var result = await this.mediator.Send(command);
-
-            if (result > 0) { return Ok(result); }
-
-            return StatusCode(400);
+            return result > 0 ? Ok(result) : BadRequest();
         }
 
         [HttpPost("/{customer}/upload")]
@@ -59,26 +56,22 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPatch("{jobId}")]
-        public string UpdateJobStatus([FromRoute] int jobId, int translatorId, string newStatus = "")
+        public async Task<ActionResult> UpdateJobStatus([FromRoute] int jobId, [FromBody] UpdateJobStatusCommand command)
         {
-            //_logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
-            //if (typeof(JobStatuses).GetProperties().Count(prop => prop.Name == newStatus) == 0)
-            //{
-            //    return "invalid status";
-            //}
-
-            //var job = _context.TranslationJobs.Single(j => j.Id == jobId);
-
-            //bool isInvalidStatusChange = (job.Status == JobStatuses.New && newStatus == JobStatuses.Completed) ||
-            //                             job.Status == JobStatuses.Completed || newStatus == JobStatuses.New;
-            //if (isInvalidStatusChange)
-            //{
-            //    return "invalid status change";
-            //}
-
-            //job.Status = newStatus;
-            //_context.SaveChanges();
-            return "updated";
+            try
+            {
+                command.JobId = jobId;
+                var result = await this.mediator.Send(command);
+                return result ? Ok() : BadRequest();
+            }
+            catch (ValidationException exc)
+            {
+                return BadRequest(exc.Message);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

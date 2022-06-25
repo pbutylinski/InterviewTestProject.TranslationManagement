@@ -6,7 +6,7 @@
 
         IEnumerable<T> GetAll();
 
-        Task Update(int id, T data);
+        Task Update(T data);
 
         Task<int> Create(T data);
 

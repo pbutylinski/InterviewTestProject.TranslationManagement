@@ -39,7 +39,7 @@ namespace TranslationManagement.DataAccess.Repositories
             }
         }
 
-        public async Task Update(int id, TranslationJob data)
+        public async Task Update(TranslationJob data)
         {
             this.dbContext.TranslationJobs.Update(data);
             await this.dbContext.SaveChangesAsync();
