@@ -1,6 +1,6 @@
-﻿namespace TranslationManagement.Api.ViewModels
+﻿namespace TranslationManagement.Api.Queries
 {
-    public class TranslationJobViewModel
+    public class GetJobsQueryResult
     {
         public int Id { get; set; }
         public string CustomerName { get; set; }

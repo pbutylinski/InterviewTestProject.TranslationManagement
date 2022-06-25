@@ -11,6 +11,11 @@ namespace TranslationManagement.DataAccess.Repositories
             this.dbContext = dbContext;
         }
 
+        public IEnumerable<TranslationJob> GetAll()
+        {
+            return this.dbContext.TranslationJobs.AsEnumerable();
+        }
+
         public async Task<TranslationJob?> Get(int id)
         {
             return await this.dbContext.TranslationJobs.FindAsync(id);

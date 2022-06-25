@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using MediatR;
 
 namespace TranslationManagement.Api
 {
@@ -22,6 +24,8 @@ namespace TranslationManagement.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslationManagement.Api", Version = "v1" });
             });
+
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             DataAccess.ServiceConfigurations.ConfigureServices(services);
             FileProcessors.ServiceConfigurations.ConfigureServices(services);

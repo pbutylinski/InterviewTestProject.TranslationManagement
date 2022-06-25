@@ -1,6 +1,8 @@
-﻿namespace TranslationManagement.Api.Queries
+﻿using MediatR;
+
+namespace TranslationManagement.Api.Queries
 {
-    public class GetJobsQuery
+    public class GetJobsQuery : IRequest<GetJobsQueryResult[]>
     {
     }
 }

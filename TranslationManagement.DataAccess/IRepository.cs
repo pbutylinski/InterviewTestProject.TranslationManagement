@@ -4,6 +4,8 @@
     {
         Task<T?> Get(int id);
 
+        IEnumerable<T> GetAll();
+
         Task Update(int id, T data);
 
         Task<int> Create(T data);

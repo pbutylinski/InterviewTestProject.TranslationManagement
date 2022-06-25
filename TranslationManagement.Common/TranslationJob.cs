@@ -1,5 +1,8 @@
 ﻿namespace TranslationManagement.Domain
 {
+    /// <summary>
+    /// This should be used internally across services
+    /// </summary>
     public class TranslationJob
     {
         public string? CustomerName { get; set; }

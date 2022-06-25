@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.2" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.2" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
@@ -19,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\External.ThirdParty.Services\External.ThirdParty.Services.csproj" />
+    <ProjectReference Include="..\TranslationManagement.Common\TranslationManagement.Domain.csproj" />
     <ProjectReference Include="..\TranslationManagement.DataAccess\TranslationManagement.DataAccess.csproj" />
     <ProjectReference Include="..\Translationmanagement.FileProcessors\TranslationManagement.FileProcessors.csproj" />
   </ItemGroup>

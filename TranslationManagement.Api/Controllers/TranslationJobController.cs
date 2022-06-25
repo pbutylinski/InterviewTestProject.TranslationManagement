@@ -1,62 +1,41 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using External.ThirdParty.Services;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using TranslationManagement.Api.Commands;
-using TranslationManagement.Api.Controlers;
+using TranslationManagement.Api.Queries;
 
 namespace TranslationManagement.Api.Controllers
 {
-    [ApiController]
-    [Route("api/jobs/[action]")]
+    [ApiController, Route("api/jobs")]
     public class TranslationJobController : ControllerBase
     {
-        //private AppDbContext _context;
-        private readonly ILogger<TranslatorManagementController> _logger;
+        private readonly IMediator mediator;
 
-        public TranslationJobController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMediator mediator)
         {
-            //_context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            _logger = logger;
+            this.mediator = mediator;
         }
 
-        //[HttpGet]
-        //public TranslationJob[] GetJobs()
-        //{
-        //    return _context.TranslationJobs.ToArray();
-        //}
-
-        [HttpPost]
-        public bool CreateJob(CreateJobCommand job)
+        [HttpGet("")]
+        public async Task<ActionResult<GetJobsQueryResult[]>> GetJobs()
         {
-            //job.Status = "New";
-            //SetPrice(job);
-            //_context.TranslationJobs.Add(job);
-            //bool success = _context.SaveChanges() > 0;
-            //if (success)
-            //{
-            //    var notificationSvc = new UnreliableNotificationService();
-            //    while (!notificationSvc.SendNotification("Job created: " + job.Id).Result)
-            //    {
-            //    }
-
-            //    _logger.LogInformation("New job notification sent");
-            //}
-
-            //return success;
-
-            return false;
+            var result = await this.mediator.Send(new GetJobsQuery());
+            return Ok(result);
         }
 
-        [HttpPost]
-        public bool CreateJobWithFile(IFormFile file, string customer)
+        [HttpPost("")]
+        public async Task<ActionResult<int>> CreateJob([FromBody] CreateJobCommand job)
+        {
+            var result = await this.mediator.Send(job);
+
+            if (result > 0) { return Ok(result); }
+
+            return StatusCode(400);
+        }
+
+        [HttpPost("/{customer}/upload")]
+        public bool CreateJobWithFile([FromBody] IFormFile file, [FromRoute] string customer)
         {
             //var reader = new StreamReader(file.OpenReadStream());
 
@@ -76,8 +55,8 @@ namespace TranslationManagement.Api.Controllers
             return false;
         }
 
-        [HttpPost]
-        public string UpdateJobStatus(int jobId, int translatorId, string newStatus = "")
+        [HttpPatch("{jobId}")]
+        public string UpdateJobStatus([FromRoute]int jobId, int translatorId, string newStatus = "")
         {
             //_logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
             //if (typeof(JobStatuses).GetProperties().Count(prop => prop.Name == newStatus) == 0)
