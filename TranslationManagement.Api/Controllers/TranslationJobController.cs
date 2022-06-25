@@ -24,10 +24,13 @@ namespace TranslationManagement.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("")]
-        public async Task<ActionResult<int>> CreateJob([FromBody] CreateJobCommand job)
+        [HttpPost("/{customer}")]
+        public async Task<ActionResult<int>> CreateJob(
+            [FromRoute] string customer, [FromBody] CreateJobCommand command)
         {
-            var result = await this.mediator.Send(job);
+            command.CustomerName = customer;
+
+            var result = await this.mediator.Send(command);
 
             if (result > 0) { return Ok(result); }
 
@@ -56,7 +59,7 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPatch("{jobId}")]
-        public string UpdateJobStatus([FromRoute]int jobId, int translatorId, string newStatus = "")
+        public string UpdateJobStatus([FromRoute] int jobId, int translatorId, string newStatus = "")
         {
             //_logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
             //if (typeof(JobStatuses).GetProperties().Count(prop => prop.Name == newStatus) == 0)
