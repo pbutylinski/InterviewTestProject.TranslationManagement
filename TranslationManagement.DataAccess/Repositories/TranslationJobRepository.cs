@@ -1,4 +1,5 @@
-﻿using TranslationManagement.DataAccess.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TranslationManagement.DataAccess.Models;
 
 namespace TranslationManagement.DataAccess.Repositories
 {
@@ -13,12 +14,16 @@ namespace TranslationManagement.DataAccess.Repositories
 
         public IEnumerable<TranslationJob> GetAll()
         {
-            return this.dbContext.TranslationJobs.AsEnumerable();
+            return this.dbContext.TranslationJobs
+                .Include(x => x.AssignedTranslator)
+                .AsEnumerable();
         }
 
         public TranslationJob? Get(int id)
         {
-            return this.dbContext.TranslationJobs.FirstOrDefault(x => x.Id == id);
+            return this.dbContext.TranslationJobs
+                .Include(x => x.AssignedTranslator)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<int> Create(TranslationJob data)
@@ -47,7 +52,9 @@ namespace TranslationManagement.DataAccess.Repositories
 
         public TranslationJob? FindByName(string name)
         {
-            return this.dbContext.TranslationJobs.FirstOrDefault(x => x.CustomerName == name);
+            return this.dbContext.TranslationJobs
+                .Include(x => x.AssignedTranslator)
+                .FirstOrDefault(x => x.CustomerName == name);
         }
     }
 }

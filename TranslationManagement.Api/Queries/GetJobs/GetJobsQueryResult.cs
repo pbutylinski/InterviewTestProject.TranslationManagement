@@ -8,5 +8,6 @@
         public string OriginalContent { get; set; }
         public string TranslatedContent { get; set; }
         public double Price { get; set; }
+        public GetTranslatorsQueryResult AssignedTranslator { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace TranslationManagement.Domain.Services
     {
         Task<int> Create(TranslationJob job);
 
-        Task<bool> UpdateStatus(int jobId, string newStatus);
+        Task<bool> UpdateStatus(int jobId, string newStatus, int translatorId);
 
         TranslationJob Get(int jobId);
 
@@ -30,10 +30,10 @@ namespace TranslationManagement.Domain.Services
             IUnreliableServiceWrapper serviceWrapper,
             IMapper mapper)
         {
-            this.repository = repository;
-            this.priceCalculation = priceCalculation;
-            this.serviceWrapper = serviceWrapper;
-            this.mapper = mapper;
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.priceCalculation = priceCalculation ?? throw new ArgumentNullException(nameof(priceCalculation));
+            this.serviceWrapper = serviceWrapper ?? throw new ArgumentNullException(nameof(serviceWrapper));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Create(TranslationJob job)
@@ -60,12 +60,14 @@ namespace TranslationManagement.Domain.Services
             return this.mapper.Map<TranslationJob>(job);
         }
 
-        public async Task<bool> UpdateStatus(int jobId, string newStatus)
+        public async Task<bool> UpdateStatus(int jobId, string newStatus, int translatorId)
         {
             var currentJob = this.repository.Get(jobId);
             if (currentJob == null) return false;
 
             currentJob.Status = newStatus;
+            currentJob.AssignedTranslatorId = translatorId;
+
             await this.repository.Update(currentJob);
 
             return true;
@@ -73,8 +75,9 @@ namespace TranslationManagement.Domain.Services
 
         public List<TranslationJob> GetAll()
         {
-            return this.repository
-                .GetAll()
+            var items = this.repository.GetAll();
+
+            return items
                 .Select(this.mapper.Map<TranslationJob>)
                 .ToList();
         }

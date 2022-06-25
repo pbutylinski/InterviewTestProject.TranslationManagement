@@ -8,5 +8,7 @@
         public string? OriginalContent { get; set; }
         public string? TranslatedContent { get; set; }
         public double Price { get; set; }
+        public int? AssignedTranslatorId { get; set; }
+        public Translator? AssignedTranslator { get; set; }
     }
 }

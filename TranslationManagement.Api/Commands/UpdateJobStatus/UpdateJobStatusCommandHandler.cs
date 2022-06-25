@@ -36,7 +36,7 @@ namespace TranslationManagement.Api.Commands
             this.jobStatusValidator.ValidateAndThrow(model.Status, request.NewStatus);
             this.certifiedTranslatorValidator.ValidateAndThrow(request.NewStatus, translator.Status);
 
-            return await this.translationJobService.UpdateStatus(request.JobId, request.NewStatus);
+            return await this.translationJobService.UpdateStatus(request.JobId, request.NewStatus, request.TranslatorId);
         }
     }
 }
