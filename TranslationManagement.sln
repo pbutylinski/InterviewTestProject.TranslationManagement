@@ -20,11 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleData", "SampleData", 
 		job.xml = job.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.DataAccess", "TranslationManagement.DataAccess\TranslationManagement.DataAccess.csproj", "{2EE5E0D9-1FB9-43AF-BC3E-BFA2C4C6E896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.DataAccess", "TranslationManagement.DataAccess\TranslationManagement.DataAccess.csproj", "{2EE5E0D9-1FB9-43AF-BC3E-BFA2C4C6E896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Domain", "TranslationManagement.Common\TranslationManagement.Domain.csproj", "{F2030471-E234-4FBD-935A-6AB1A56DDE57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Domain", "TranslationManagement.Common\TranslationManagement.Domain.csproj", "{F2030471-E234-4FBD-935A-6AB1A56DDE57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.FileProcessors", "Translationmanagement.FileProcessors\TranslationManagement.FileProcessors.csproj", "{F2E4732F-5C2D-4D4D-B041-C24229D06BB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.FileProcessors", "Translationmanagement.FileProcessors\TranslationManagement.FileProcessors.csproj", "{F2E4732F-5C2D-4D4D-B041-C24229D06BB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E97FB2ED-BC7B-43E5-898B-31D41A4BA79B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Domain.Tests", "TranslationManagement.Domain.Tests\TranslationManagement.Domain.Tests.csproj", "{15929862-EC9B-4BCA-B142-EB5B1373A2F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,9 +56,16 @@ Global
 		{F2E4732F-5C2D-4D4D-B041-C24229D06BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E4732F-5C2D-4D4D-B041-C24229D06BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E4732F-5C2D-4D4D-B041-C24229D06BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15929862-EC9B-4BCA-B142-EB5B1373A2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15929862-EC9B-4BCA-B142-EB5B1373A2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15929862-EC9B-4BCA-B142-EB5B1373A2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15929862-EC9B-4BCA-B142-EB5B1373A2F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15929862-EC9B-4BCA-B142-EB5B1373A2F9} = {E97FB2ED-BC7B-43E5-898B-31D41A4BA79B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {821E39E6-0BB8-498C-9510-D913968AA6FF}
