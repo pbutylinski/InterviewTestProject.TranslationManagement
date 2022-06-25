@@ -2,6 +2,7 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using TranslationManagement.Domain.Models;
 using TranslationManagement.Domain.Services;
 
 namespace TranslationManagement.Api.Commands
@@ -21,7 +22,7 @@ namespace TranslationManagement.Api.Commands
 
         public async Task<int> Handle(CreateJobCommand request, CancellationToken cancellationToken)
         {
-            var job = this.mapper.Map<Domain.TranslationJob>(request);
+            var job = this.mapper.Map<TranslationJob>(request);
             return await this.translationJobService.Create(job);
         }
     }

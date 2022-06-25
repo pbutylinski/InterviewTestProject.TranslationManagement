@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using TranslationManagement.Domain;
+using TranslationManagement.Domain.Models;
 using TranslationManagement.Domain.Services;
 using TranslationManagement.FileProcessors;
 

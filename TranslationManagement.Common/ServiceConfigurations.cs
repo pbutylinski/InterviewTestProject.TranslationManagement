@@ -13,6 +13,8 @@ namespace TranslationManagement.Domain
             services.AddScoped<IUnreliableServiceWrapper, UnreliableServiceWrapper>();
             services.AddScoped<IJobStatusValidator, JobStatusValidator>();
             services.AddScoped<ITranslationJobService, TranslationJobService>();
+            services.AddScoped<ITranslatorStatusValidator, TranslatorStatusValidator>();
+            services.AddScoped<ITranslatorService, TranslatorService>();
 
             // External
             services.AddScoped<INotificationService, UnreliableNotificationService>();

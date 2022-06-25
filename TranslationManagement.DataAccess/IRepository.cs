@@ -2,7 +2,9 @@
 {
     public interface IRepository<T> where T: new()
     {
-        Task<T?> Get(int id);
+        T? Get(int id);
+
+        T? FindByName(string name);
 
         IEnumerable<T> GetAll();
 

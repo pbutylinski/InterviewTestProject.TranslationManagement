@@ -1,4 +1,6 @@
-﻿namespace TranslationManagement.Domain.Services
+﻿using TranslationManagement.Domain.Models;
+
+namespace TranslationManagement.Domain.Services
 {
     public interface IPriceCalculationService
     {

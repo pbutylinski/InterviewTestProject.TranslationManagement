@@ -16,7 +16,7 @@ namespace TranslationManagement.Api.Controllers
 
         public TranslationJobController(IMediator mediator)
         {
-            this.mediator = mediator;
+            this.mediator = mediator ?? throw new System.ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet("")]
@@ -29,6 +29,8 @@ namespace TranslationManagement.Api.Controllers
         [HttpPost("/{customer}")]
         public async Task<ActionResult<int>> CreateJob([FromRoute] string customer, [FromBody] CreateJobCommand command)
         {
+            if (command == null) return BadRequest("Request body cannot be null");
+
             command.CustomerName = customer;
             var result = await this.mediator.Send(command);
             return result > 0 ? Ok(result) : BadRequest();
@@ -37,6 +39,8 @@ namespace TranslationManagement.Api.Controllers
         [HttpPost("/{customer}/upload")]
         public async Task<ActionResult<int>> CreateJobWithFile(IFormFile file, [FromRoute] string customer)
         {
+            if (file == null) return BadRequest("File cannot be empty");
+
             var command = new CreateJobFromFileCommand
             {
                 Customer = customer,
@@ -66,6 +70,8 @@ namespace TranslationManagement.Api.Controllers
         [HttpPatch("{jobId}")]
         public async Task<ActionResult> UpdateJobStatus([FromRoute] int jobId, [FromBody] UpdateJobStatusCommand command)
         {
+            if (command == null) return BadRequest("Request body cannot be null");
+
             try
             {
                 command.JobId = jobId;

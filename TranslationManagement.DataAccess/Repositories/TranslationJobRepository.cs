@@ -16,9 +16,9 @@ namespace TranslationManagement.DataAccess.Repositories
             return this.dbContext.TranslationJobs.AsEnumerable();
         }
 
-        public async Task<TranslationJob?> Get(int id)
+        public TranslationJob? Get(int id)
         {
-            return await this.dbContext.TranslationJobs.FindAsync(id);
+            return this.dbContext.TranslationJobs.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<int> Create(TranslationJob data)
@@ -43,6 +43,11 @@ namespace TranslationManagement.DataAccess.Repositories
         {
             this.dbContext.TranslationJobs.Update(data);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public TranslationJob? FindByName(string name)
+        {
+            return this.dbContext.TranslationJobs.FirstOrDefault(x => x.CustomerName == name);
         }
     }
 }

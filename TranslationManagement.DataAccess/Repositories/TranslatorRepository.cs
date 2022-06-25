@@ -16,9 +16,9 @@ namespace TranslationManagement.DataAccess.Repositories
             return this.dbContext.Translators.AsEnumerable();
         }
 
-        public async Task<Translator?> Get(int id)
+        public Translator? Get(int id)
         {
-            return await this.dbContext.Translators.FindAsync(id);
+            return this.dbContext.Translators.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<int> Create(Translator data)
@@ -43,6 +43,11 @@ namespace TranslationManagement.DataAccess.Repositories
         {
             this.dbContext.Translators.Update(data);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public Translator? FindByName(string name)
+        {
+            return this.dbContext.Translators.FirstOrDefault(x => x.Name == name);
         }
     }
 }

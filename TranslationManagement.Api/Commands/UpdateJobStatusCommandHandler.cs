@@ -21,7 +21,7 @@ namespace TranslationManagement.Api.Commands
 
         public async Task<bool> Handle(UpdateJobStatusCommand request, CancellationToken cancellationToken)
         {
-            var model = await this.translationJobService.Get(request.JobId);
+            var model = this.translationJobService.Get(request.JobId);
             if (model == null) return false;
 
             this.validator.ValidateAndThrow(model.Status, request.NewStatus);

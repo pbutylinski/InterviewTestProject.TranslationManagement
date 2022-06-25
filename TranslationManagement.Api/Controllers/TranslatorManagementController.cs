@@ -1,76 +1,68 @@
-﻿using System;
-using System.Linq;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using TranslationManagement.Api.Commands;
+using TranslationManagement.Api.Queries;
+using TranslationManagement.Domain.Validators;
 
 namespace TranslationManagement.Api.Controlers
 {
-    [ApiController]
-    [Route("api/TranslatorsManagement/[action]")]
+    [ApiController, Route("api/translators")]
     public class TranslatorManagementController : ControllerBase
     {
-        public class TranslatorModel
+        private readonly IMediator mediator;
+
+        public TranslatorManagementController(IMediator mediator)
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string HourlyRate { get; set; }
-            public string Status { get; set; }
-            public string CreditCardNumber { get; set; }
+            this.mediator = mediator ?? throw new System.ArgumentNullException(nameof(mediator));
         }
 
-        public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
-
-        private readonly ILogger<TranslatorManagementController> _logger;
-        //private AppDbContext _context;
-
-        public TranslatorManagementController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
+        [HttpGet("")]
+        public async Task<ActionResult<GetTranslatorsQueryResult[]>> GetTranslators()
         {
-            //_context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            _logger = logger;
+            var result = await this.mediator.Send(new GetTranslatorsQuery());
+            return Ok(result);
         }
 
-        [HttpGet]
-        public TranslatorModel[] GetTranslators()
+        [HttpGet("/{name}")]
+        public async Task<ActionResult<GetTranslatorsQueryResult>> GetTranslatorsByName([FromRoute] string name)
         {
-            //return _context.Translators.ToArray();
+            if (string.IsNullOrWhiteSpace(name)) return BadRequest("Translator name cannot be empty");
 
-            return null;
+            var result = await this.mediator.Send(new GetTranslatorByNameQuery { Name = name });
+
+            if (result == null) return NotFound();
+
+            return Ok(result);
         }
 
-        [HttpGet]
-        public TranslatorModel[] GetTranslatorsByName(string name)
+        [HttpPost("")]
+        public async Task<ActionResult<int>> AddTranslator([FromBody] CreateTranslatorCommand command)
         {
-            //return _context.Translators.Where(t => t.Name == name).ToArray();
+            if (command == null) return BadRequest("Request body cannot be null");
 
-            return null;
+            return await this.mediator.Send(command);
         }
 
-        [HttpPost]
-        public bool AddTranslator(TranslatorModel translator)
+        [HttpPatch("{translatorId}")]
+        public async Task<ActionResult> UpdateTranslatorStatus([FromRoute] int translatorId, [FromBody] UpdateTranslatorStatusCommand command)
         {
-            //_context.Translators.Add(translator);
-            //return _context.SaveChanges() > 0;
+            if (command == null) return BadRequest("Request body cannot be null");
 
-            return false;
-        }
-        
-        [HttpPost]
-        public string UpdateTranslatorStatus(int Translator, string newStatus = "")
-        {
-            //_logger.LogInformation("User status update request: " + newStatus + " for user " + Translator.ToString());
-            //if (TranslatorStatuses.Where(status => status == newStatus).Count() == 0)
-            //{
-            //    throw new ArgumentException("unknown status");
-            //}
-
-            //var job = _context.Translators.Single(j => j.Id == Translator);
-            //job.Status = newStatus;
-            //_context.SaveChanges();
-
-            //return "updated";
-
-            return "";
+            try
+            {
+                command.TranslatorId = translatorId;
+                var result = await this.mediator.Send(command);
+                return result ? Ok() : BadRequest();
+            }
+            catch (ValidationException exc)
+            {
+                return BadRequest(exc.Message);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TranslationManagement.Domain
+﻿namespace TranslationManagement.Domain.Models
 {
     /// <summary>
     /// This should be used internally across services

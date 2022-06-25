@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TranslationManagement.Common.Constants;
 using TranslationManagement.DataAccess;
+using TranslationManagement.Domain.Models;
 using TranslationJobDb = TranslationManagement.DataAccess.Models.TranslationJob;
 
 namespace TranslationManagement.Domain.Services
@@ -11,7 +12,7 @@ namespace TranslationManagement.Domain.Services
 
         Task<bool> UpdateStatus(int jobId, string newStatus);
 
-        Task<TranslationJob> Get(int jobId);
+        TranslationJob Get(int jobId);
 
         List<TranslationJob> GetAll();
     }
@@ -53,15 +54,15 @@ namespace TranslationManagement.Domain.Services
             return id;
         }
 
-        public async Task<TranslationJob> Get(int jobId)
+        public TranslationJob Get(int jobId)
         {
-            var job = await this.repository.Get(jobId);
+            var job = this.repository.Get(jobId);
             return this.mapper.Map<TranslationJob>(job);
         }
 
         public async Task<bool> UpdateStatus(int jobId, string newStatus)
         {
-            var currentJob = await this.repository.Get(jobId);
+            var currentJob = this.repository.Get(jobId);
             if (currentJob == null) return false;
 
             currentJob.Status = newStatus;
