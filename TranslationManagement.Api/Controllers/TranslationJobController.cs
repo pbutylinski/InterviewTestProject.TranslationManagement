@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TranslationManagement.Api.Commands;
 using TranslationManagement.Api.Controlers;
 
 namespace TranslationManagement.Api.Controllers
@@ -16,23 +17,6 @@ namespace TranslationManagement.Api.Controllers
     [Route("api/jobs/[action]")]
     public class TranslationJobController : ControllerBase
     {
-        public class TranslationJob
-        {
-            public int Id { get; set; }
-            public string CustomerName { get; set; }
-            public string Status { get; set; }
-            public string OriginalContent { get; set; }
-            public string TranslatedContent { get; set; }
-            public double Price { get; set; }
-        }
-
-        static class JobStatuses
-        {
-            internal static readonly string New = "New";
-            internal static readonly string Inprogress = "InProgress";
-            internal static readonly string Completed = "Completed";
-        }
-
         private AppDbContext _context;
         private readonly ILogger<TranslatorManagementController> _logger;
 
@@ -78,24 +62,10 @@ namespace TranslationManagement.Api.Controllers
         public bool CreateJobWithFile(IFormFile file, string customer)
         {
             var reader = new StreamReader(file.OpenReadStream());
-            string content;
+            
+            // TODO: Use processors
 
-            if (file.FileName.EndsWith(".txt"))
-            {
-                content = reader.ReadToEnd();
-            }
-            else if (file.FileName.EndsWith(".xml"))
-            {
-                var xdoc = XDocument.Parse(reader.ReadToEnd());
-                content = xdoc.Root.Element("Content").Value;
-                customer = xdoc.Root.Element("Customer").Value.Trim();
-            }
-            else
-            {
-                throw new NotSupportedException("unsupported file");
-            }
-
-            var newJob = new TranslationJob()
+            var newJob = new TranslationJobCommand()
             {
                 OriginalContent = content,
                 TranslatedContent = "",

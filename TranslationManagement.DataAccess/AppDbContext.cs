@@ -2,7 +2,7 @@
 using TranslationManagement.Api.Controlers;
 using TranslationManagement.Api.Controllers;
 
-namespace TranslationManagement.Api
+namespace TranslationManagement.DataAccess
 {
     public class AppDbContext : DbContext
     {
