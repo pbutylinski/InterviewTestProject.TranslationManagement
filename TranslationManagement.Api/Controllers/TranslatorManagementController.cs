@@ -22,47 +22,55 @@ namespace TranslationManagement.Api.Controlers
         public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
 
         private readonly ILogger<TranslatorManagementController> _logger;
-        private AppDbContext _context;
+        //private AppDbContext _context;
 
         public TranslatorManagementController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
         {
-            _context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
+            //_context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
             _logger = logger;
         }
 
         [HttpGet]
         public TranslatorModel[] GetTranslators()
         {
-            return _context.Translators.ToArray();
+            //return _context.Translators.ToArray();
+
+            return null;
         }
 
         [HttpGet]
         public TranslatorModel[] GetTranslatorsByName(string name)
         {
-            return _context.Translators.Where(t => t.Name == name).ToArray();
+            //return _context.Translators.Where(t => t.Name == name).ToArray();
+
+            return null;
         }
 
         [HttpPost]
         public bool AddTranslator(TranslatorModel translator)
         {
-            _context.Translators.Add(translator);
-            return _context.SaveChanges() > 0;
+            //_context.Translators.Add(translator);
+            //return _context.SaveChanges() > 0;
+
+            return false;
         }
         
         [HttpPost]
         public string UpdateTranslatorStatus(int Translator, string newStatus = "")
         {
-            _logger.LogInformation("User status update request: " + newStatus + " for user " + Translator.ToString());
-            if (TranslatorStatuses.Where(status => status == newStatus).Count() == 0)
-            {
-                throw new ArgumentException("unknown status");
-            }
+            //_logger.LogInformation("User status update request: " + newStatus + " for user " + Translator.ToString());
+            //if (TranslatorStatuses.Where(status => status == newStatus).Count() == 0)
+            //{
+            //    throw new ArgumentException("unknown status");
+            //}
 
-            var job = _context.Translators.Single(j => j.Id == Translator);
-            job.Status = newStatus;
-            _context.SaveChanges();
+            //var job = _context.Translators.Single(j => j.Id == Translator);
+            //job.Status = newStatus;
+            //_context.SaveChanges();
 
-            return "updated";
+            //return "updated";
+
+            return "";
         }
     }
 }

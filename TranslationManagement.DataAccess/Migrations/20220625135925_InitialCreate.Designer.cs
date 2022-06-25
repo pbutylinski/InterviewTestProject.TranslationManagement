@@ -3,44 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TranslationManagement.Api;
+using TranslationManagement.DataAccess;
 
-namespace TranslationManagement.Api.Migrations
+#nullable disable
+
+namespace TranslationManagement.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210203102420_InitialCreate")]
+    [Migration("20220625135925_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
 
-            modelBuilder.Entity("TranslationManagement.Api.Controlers.TranslatorManagementController+TranslatorModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CreditCardNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("HourlyRate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Translators");
-                });
-
-            modelBuilder.Entity("TranslationManagement.Api.Controllers.TranslationJobController+TranslationJob", b =>
+            modelBuilder.Entity("TranslationManagement.DataAccess.Models.TranslationJob", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,6 +42,29 @@ namespace TranslationManagement.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TranslationJobs");
+                });
+
+            modelBuilder.Entity("TranslationManagement.DataAccess.Models.TranslatorModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreditCardNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Translators");
                 });
 #pragma warning restore 612, 618
         }

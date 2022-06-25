@@ -1,8 +1,7 @@
 ﻿namespace TranslationManagement.Api.Commands
 {
-    public class TranslationJobCommand
+    public class CreateJobCommand
     {
-        public int Id { get; set; }
         public string CustomerName { get; set; }
         public string Status { get; set; }
         public string OriginalContent { get; set; }

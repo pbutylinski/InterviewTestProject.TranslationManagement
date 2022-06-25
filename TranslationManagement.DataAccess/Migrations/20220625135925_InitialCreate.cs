@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace TranslationManagement.DataAccess.Migrations
 {
     public partial class InitialCreate : Migration
@@ -30,7 +32,7 @@ namespace TranslationManagement.DataAccess.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
-                    HourlyRate = table.Column<string>(type: "TEXT", nullable: true),
+                    HourlyRate = table.Column<decimal>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: true),
                     CreditCardNumber = table.Column<string>(type: "TEXT", nullable: true)
                 },
