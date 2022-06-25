@@ -1,9 +1,4 @@
 ﻿using External.ThirdParty.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TranslationManagement.Domain.Services
 {
@@ -27,11 +22,19 @@ namespace TranslationManagement.Domain.Services
         {
             for (int i = 0; i < MaxRetries; i++)
             {
-                var result = await this.service.SendNotification($"Job created: {jobId}");
-
-                if (result)
+                try
                 {
-                    return true;
+                    var result = await this.service.SendNotification($"Job created: {jobId}");
+
+                    if (result)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception)
+                {
+                    // TODO: log, but don't throw
+                    continue;
                 }
             }
 
