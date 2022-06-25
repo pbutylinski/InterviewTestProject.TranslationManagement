@@ -26,8 +26,7 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost("/{customer}")]
-        public async Task<ActionResult<int>> CreateJob(
-            [FromRoute] string customer, [FromBody] CreateJobCommand command)
+        public async Task<ActionResult<int>> CreateJob([FromRoute] string customer, [FromBody] CreateJobCommand command)
         {
             command.CustomerName = customer;
             var result = await this.mediator.Send(command);
@@ -35,24 +34,17 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost("/{customer}/upload")]
-        public bool CreateJobWithFile([FromBody] IFormFile file, [FromRoute] string customer)
+        public async Task<ActionResult<int>> CreateJobWithFile([FromBody] IFormFile file, [FromRoute] string customer)
         {
-            //var reader = new StreamReader(file.OpenReadStream());
+            var command = new CreateJobFromFileCommand
+            {
+                Customer = customer,
+                FileStream = file.OpenReadStream(),
+                FileName = file.FileName
+            };
 
-            //// TODO: Use processors
-
-            //var newJob = new CreateJobCommand()
-            //{
-            //    OriginalContent = content,
-            //    TranslatedContent = "",
-            //    CustomerName = customer,
-            //};
-
-            //SetPrice(newJob);
-
-            //return CreateJob(newJob);
-
-            return false;
+            var result = await this.mediator.Send(command);
+            return result > 0 ? Ok(result) : BadRequest();
         }
 
         [HttpPatch("{jobId}")]
