@@ -26,9 +26,11 @@ namespace TranslationManagement.Api
             });
 
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(Startup).GetTypeInfo().Assembly);
 
             DataAccess.ServiceConfigurations.ConfigureServices(services);
             FileProcessors.ServiceConfigurations.ConfigureServices(services);
+            Domain.ServiceConfigurations.ConfigureServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
