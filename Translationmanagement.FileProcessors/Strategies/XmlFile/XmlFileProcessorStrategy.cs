@@ -1,8 +1,8 @@
 ﻿using System.Xml.Serialization;
-using Translationmanagement.FileProcessors.Exceptions;
-using Translationmanagement.FileProcessors.Strategies;
+using TranslationManagement.FileProcessors.Exceptions;
+using TranslationManagement.FileProcessors.Strategies;
 
-namespace Translationmanagement.FileProcessors.XmlFile
+namespace TranslationManagement.FileProcessors.XmlFile
 {
     internal class XmlFileProcessorStrategy : FileProcessorStrategyBase, IFileProcessorStrategy
     {

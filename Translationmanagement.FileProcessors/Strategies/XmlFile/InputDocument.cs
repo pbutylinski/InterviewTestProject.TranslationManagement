@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Translationmanagement.FileProcessors.XmlFile
+namespace TranslationManagement.FileProcessors.XmlFile
 {
     [Serializable, XmlRoot("root")]
     internal class InputDocument

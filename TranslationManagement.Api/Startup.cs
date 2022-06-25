@@ -23,7 +23,8 @@ namespace TranslationManagement.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslationManagement.Api", Version = "v1" });
             });
 
-            DataAccess.Startup.ConfigureServices(services);
+            DataAccess.ServiceConfigurations.ConfigureServices(services);
+            FileProcessors.ServiceConfigurations.ConfigureServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

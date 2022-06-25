@@ -1,4 +1,4 @@
-﻿namespace Translationmanagement.FileProcessors.Strategies
+﻿namespace TranslationManagement.FileProcessors.Strategies
 {
     public abstract class FileProcessorStrategyBase
     {

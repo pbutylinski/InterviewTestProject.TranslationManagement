@@ -1,9 +1,9 @@
-﻿using Translationmanagement.FileProcessors.Exceptions;
-using Translationmanagement.FileProcessors.Strategies;
-using Translationmanagement.FileProcessors.TextFileProcessor;
-using Translationmanagement.FileProcessors.XmlFile;
+﻿using TranslationManagement.FileProcessors.Exceptions;
+using TranslationManagement.FileProcessors.Strategies;
+using TranslationManagement.FileProcessors.TextFileProcessor;
+using TranslationManagement.FileProcessors.XmlFile;
 
-namespace Translationmanagement.FileProcessors
+namespace TranslationManagement.FileProcessors
 {
     // For small non-shared interfaces used only in DI, I prefer to 
     // have the interface in the same file as implementation

@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\External.ThirdParty.Services\External.ThirdParty.Services.csproj" />
     <ProjectReference Include="..\TranslationManagement.DataAccess\TranslationManagement.DataAccess.csproj" />
+    <ProjectReference Include="..\Translationmanagement.FileProcessors\TranslationManagement.FileProcessors.csproj" />
   </ItemGroup>
 
 </Project>

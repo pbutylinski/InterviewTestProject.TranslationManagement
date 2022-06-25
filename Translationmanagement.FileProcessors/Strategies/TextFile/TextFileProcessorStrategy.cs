@@ -1,6 +1,6 @@
-﻿using Translationmanagement.FileProcessors.Strategies;
+﻿using TranslationManagement.FileProcessors.Strategies;
 
-namespace Translationmanagement.FileProcessors.TextFileProcessor
+namespace TranslationManagement.FileProcessors.TextFileProcessor
 {
     internal class TextFileProcessorStrategy : FileProcessorStrategyBase, IFileProcessorStrategy
     {

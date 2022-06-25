@@ -1,4 +1,4 @@
-﻿namespace Translationmanagement.FileProcessors
+﻿namespace TranslationManagement.FileProcessors
 {
     public class FileProcessorResult
     {

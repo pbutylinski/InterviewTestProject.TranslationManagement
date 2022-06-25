@@ -1,4 +1,4 @@
-﻿namespace Translationmanagement.FileProcessors.Exceptions
+﻿namespace TranslationManagement.FileProcessors.Exceptions
 {
     public class FileProcessingException : Exception
     {
